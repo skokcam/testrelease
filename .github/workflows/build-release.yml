@@ -45,7 +45,7 @@ jobs:
         
       # Create release text (https://stackoverflow.com/questions/3357280/print-commit-message-of-a-given-commit-in-git)
       - name: Create release message
-        run:  echo "commit_msg=$(git log --format=%B -n 1 HEAD)" >> $GITHUB_ENV
+        run:  echo "This is an automated release triggered by commit $(echo $GITHUB_SHA | cut -c 1-7)<br><br>$(git log --format=%B -n 1 HEAD)" > ./release.txt
        
       # Create release (https://github.com/actions/upload-release-asset)
       - name: Create Release
@@ -58,7 +58,7 @@ jobs:
           release_name: Release ${{ env.sha_short }}
           draft: false
           prerelease: false
-          body: This is an automated release triggered by commit ${{ env.sha_short }}<br><br>${{ env.commit_msg }}
+          bodypath: ./release.txt 
 
       # Upload release asset (https://github.com/actions/upload-release-asset)    
       - name: Upload Release Asset
