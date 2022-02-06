@@ -59,8 +59,8 @@ jobs:
           tag_name: ${{ env.sha_short }}
           release_name: Release ${{ env.sha_short }}
           draft: false
-          prerelease: false
-          bodypath: ./release.txt 
+          prerelease: true
+          body_path: ./release.txt 
 
       # Upload release asset (https://github.com/actions/upload-release-asset)    
       - name: Upload Release Asset
