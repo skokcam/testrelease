@@ -43,12 +43,13 @@ jobs:
       - name: Zip release files
         run:  zip ./build-${{ env.sha_short }}.zip file1.txt file2.txt
         
-      # Create release text
+      # Create release text (https://stackoverflow.com/questions/3357280/print-commit-message-of-a-given-commit-in-git)
       - name: Create release message
         run:  echo "This is an automated release triggered by commit \#" > ./release_msg.txt
-              echo ${{ env.sha_short }} >> ./release_msg.txt
+              echo $(echo $GITHUB_SHA | cut -c 1-7) >> ./release_msg.txt
               echo -e "\n\n" >> ./release_msg.txt
-              echo "git log --format=%B -n 1 HEAD" >> ./relase_msg.txt
+              echo "$(git log --format=%B -n 1 HEAD)" >> ./relase_msg.txt
+              cat ./release_msg.txt
        
       # Create release (https://github.com/actions/upload-release-asset)
       - name: Create Release
