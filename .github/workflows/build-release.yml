@@ -38,14 +38,18 @@ jobs:
       - name: Zip release files
         run: zip ./my-artifact.zip file1.txt file2.txt
        
+      # Get current commit short sha 
+      - name: Get SHA
+        run:  echo "sha_short=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
+        
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ env.GITHUB_SHA }}
-          release_name: Release ${{ env.GITHUB_SHA }}
+          tag_name: ${{ env.sha_short }}
+          release_name: Release ${{ env.sha_short }}
           draft: false
           prerelease: false
       - name: Upload Release Asset
