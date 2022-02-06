@@ -59,7 +59,7 @@ jobs:
           release_name: Release ${{ env.sha_short }}
           draft: false
           prerelease: false
-          body: This is an automated release triggered by commit \#${{ env.sha_short }}\n\n${{ env.commit_msg }}
+          body: This is an automated release triggered by commit \#${{ env.sha_short }}<br><br>${{ env.commit_msg }}
 
       # Upload release asset (https://github.com/actions/upload-release-asset)    
       - name: Upload Release Asset
