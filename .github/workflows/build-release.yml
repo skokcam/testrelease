@@ -40,7 +40,7 @@ jobs:
        
       # Get current commit short sha 
       - name: Get SHA
-        run:  echo "sha_short=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
+        run:  echo "sha_short=$(echo $GITHUB_SHA | cut -c 1-7)" >> $GITHUB_ENV
         
       - name: Create Release
         id: create_release
