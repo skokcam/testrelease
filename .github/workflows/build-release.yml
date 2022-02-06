@@ -41,7 +41,14 @@ jobs:
 
       # Zip files
       - name: Zip release files
-        run: zip ./build-${{ env.sha_short }}.zip file1.txt file2.txt
+        run:  zip ./build-${{ env.sha_short }}.zip file1.txt file2.txt
+        
+      #Create release text from commit message (https://stackoverflow.com/questions/3357280/print-commit-message-of-a-given-commit-in-git)
+      - name: Create release message
+        run:  echo "This is an automated release triggered by commit #" > ./release_msg.txt
+              echo ${{ env.sha_short }} >> ./release_msg.txt
+              echo -e "\n\n" >> ./release_msg.txt
+              echo "git log --format=%B -n 1 HEAD" >> ./relase_msg.txt
        
       # Create release (https://github.com/actions/upload-release-asset)
       - name: Create Release
@@ -54,7 +61,7 @@ jobs:
           release_name: Release ${{ env.sha_short }}
           draft: false
           prerelease: false
-          body: This is an automated release triggered by commit #${{ env.sha_short }}
+          bodypath: ./release_msg.txt 
 
       # Upload release asset (https://github.com/actions/upload-release-asset)    
       - name: Upload Release Asset
