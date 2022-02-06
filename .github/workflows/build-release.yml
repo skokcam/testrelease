@@ -62,7 +62,7 @@ jobs:
           release_name: Release ${{ env.sha_short }}
           draft: false
           prerelease: false
-          bodypath: ./release_msg.txt 
+          body: echo -e "This is an automated release triggered by commit \#$(echo $GITHUB_SHA | cut -c 1-7)\n\n$(git log --format=%B -n 1 HEAD)"
 
       # Upload release asset (https://github.com/actions/upload-release-asset)    
       - name: Upload Release Asset
