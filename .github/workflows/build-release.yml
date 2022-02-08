@@ -34,11 +34,23 @@ jobs:
         run: |
           echo Add other actions to build, > file2.txt
           echo test, and deploy your project. >> file2.txt
-          
+
       # Get current commit sha (https://stackoverflow.com/questions/57968497/how-do-i-set-an-env-var-with-a-bash-expression-in-github-actions)
       - name: Get SHA
         run:  echo "sha_short=$(echo $GITHUB_SHA | cut -c 1-7)" >> $GITHUB_ENV
+        
+      #Load build-release.env
+      - name: Load build-release.env
+        run:  cat ./build-release.env >> $GITHUB_ENV
 
+# This is the second job for this workflow "release"
+  release:
+    if: env.build-release == true    
+    runs-on: ubuntu-latest  # The type of runner that the job will run on
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:          
+    
       # Zip files
       - name: Zip release files
         run:  zip ./build-${{ env.sha_short }}.zip file1.txt file2.txt
@@ -46,11 +58,12 @@ jobs:
       # Create release text (https://stackoverflow.com/questions/3357280/print-commit-message-of-a-given-commit-in-git)
       - name: Create release message
         run:  |
-              echo "This is an automated release triggered by commit $(echo $GITHUB_SHA | cut -c 1-7)" > ./release.txt              
+              echo ${{ env.release-message }} > ./release.txt
+              echo "This is an automated release triggered by commit $(echo $GITHUB_SHA | cut -c 1-7)" >> ./release.txt              
               echo "<br> $(git log --format=%B -n 1 HEAD)" >> ./release.txt
        
       # Create release (https://github.com/actions/upload-release-asset)
-      - name: Create Release
+      - name: Create Release        
         id: create_release
         uses: actions/create-release@v1
         env:
