@@ -46,8 +46,8 @@ jobs:
       #Check actor and repository owner
       - name: Check actor and repository owner
         run: |
-              env.actor = ${ GITHUB_ACTOR }
-              env.owner = ${ GITHUB_REPOSITORY_OWNER }
+              env.actor = $GITHUB_ACTOR
+              env.owner = $GITHUB_REPOSITORY_OWNER
     
       # Zip files
       - name: Zip release files
