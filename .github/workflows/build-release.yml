@@ -45,7 +45,7 @@ jobs:
 
 # This is the second job for this workflow "release"
   release:
-    if: ${{ env.build-release == true }}
+    if: env.build_release == true
     runs-on: ubuntu-latest  # The type of runner that the job will run on
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -58,7 +58,7 @@ jobs:
       # Create release text (https://stackoverflow.com/questions/3357280/print-commit-message-of-a-given-commit-in-git)
       - name: Create release message
         run:  |
-              echo ${{ env.release-message }} > ./release.txt
+              echo ${{ env.release_message }} > ./release.txt
               echo "This is an automated release triggered by commit $(echo $GITHUB_SHA | cut -c 1-7)" >> ./release.txt              
               echo "<br> $(git log --format=%B -n 1 HEAD)" >> ./release.txt
        
