@@ -46,8 +46,8 @@ jobs:
       #Check actor and repository owner
       - name: Check actor and repository owner
         run: |
-              env.actor = $GITHUB_ACTOR
-              env.owner = $GITHUB_REPOSITORY_OWNER
+              echo "actor=$(echo $GITHUB_ACTOR)" >> $GITHUB_ENV
+              echo "owner=$(echo $GITHUB_REPOSITORY_OWNER)" >> $GITHUB_ENV
     
       # Zip files
       - name: Zip release files
