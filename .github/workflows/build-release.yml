@@ -48,6 +48,7 @@ jobs:
         run: |
               echo "actor=$(echo $GITHUB_ACTOR)" >> $GITHUB_ENV
               echo "owner=$(echo $GITHUB_REPOSITORY_OWNER)" >> $GITHUB_ENV
+              echo "trigger=$(echo $GITHUB_EVENT_NAME)" >> $GITHUB_ENV
     
       # Zip files
       - name: Zip release files
@@ -62,7 +63,7 @@ jobs:
        
       # Create release (https://github.com/actions/upload-release-asset)
       - name: Create Release        
-        if: env.build_release == true
+        if: env.build_release == true && trigger != "pull"
         id: create_release
         uses: actions/create-release@v1
         env:
