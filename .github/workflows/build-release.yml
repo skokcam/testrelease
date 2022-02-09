@@ -58,7 +58,7 @@ jobs:
       - name: Create release message
         run:  |
               echo ${{ env.release_message }} >> ./release.txt
-              echo "triggered by commit $(echo $GITHUB_SHA | cut -c 1-7)<br>" >> ./release.txt              
+              echo "triggered by commit $(echo $GITHUB_SHA | cut -c 1-7)" >> ./release.txt              
               echo "$(git log --format=%B -n 1 HEAD)" >> ./release.txt
               echo -e "Built release text:\r\n$(cat ./release.txt)"
        
