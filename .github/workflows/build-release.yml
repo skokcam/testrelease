@@ -63,7 +63,7 @@ jobs:
        
       # Create release (https://github.com/actions/upload-release-asset)
       - name: Create Release        
-        if: env.build_release == true && env.trigger == "push"
+        if: env.build_release == true && env.trigger == 'push'
         id: create_release
         uses: actions/create-release@v1
         env:
